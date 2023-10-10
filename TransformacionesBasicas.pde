@@ -1,34 +1,88 @@
-//Se crea el valor de las variables
 float h = 0;
-float b=0;
-// Se definen las propiedades del entorno inicial
+float b = 0;
+boolean rotar;
+
+int posX=0;
+int posY=0;
+int velX=2;
+int velY=2;
+boolean traslacion;
+
+int a=0;
+boolean escalado;
+
+float ladoX4 = width; 
+float ladoY4 = height; 
+float sesgoX4 = 1; 
+float sesgoY4 =0.95;
+boolean sesgado;
+
 void setup(){
- //Elegimos tamaño del alto y ancho de la ventana de visualizacion 
  size(700, 500);
- //Interpreta parámetros como el punto central de la forma, mientras que el tercer y cuarto parámetros son su ancho y alto.
- rectMode(CENTER);
- //Definimos el color de fondo
  background(240, 99, 238);
 } 
-  // Se ejecuta las líneas de código
 void draw(){
-  //Se establece el color utilizado para rellenar las forma del rectangulo
-  fill(197,99,240);
-  // Creamos un rectangulo 
-  rect(width/2, height/2, width, height);
-  //y dibujamos el cuadrado 
-  //trasladamos el punto 0,0 al centro de la ventana
+ if (rotar){
+  background(240, 99, 238);
   translate(width/2,height/2);
-  //borde y relleno del cuadrado
   fill(124,188,255);
-  stroke(0);
-  //Se realiza la escala del tamaño del cuadrado
-  scale(1.5);
-  //asignamos el valor de giro
+  rectMode(CENTER);
   rotate(b);
-  //Tamaño del cuadrado
   rect(0, 0, 150, 150);
-  //Esto hace que el valor del ángulo aumente a cada ciclo y gire 
   b = b + 0.01;
-
+}
+  if(traslacion){
+  background(229,76,76);
+    scale(1);
+    posX += velX;
+    posY += velY;
+    if (posX > width || posX  < 0) {
+      velX *= -1;
+    }
+    if (posY > height || posY < 0) {
+      velY *= -1;
+    }
+    rectMode(CENTER);
+    rect(posX, posY, 150, 150);
+  }
+  if (escalado){
+  background(76,227,182);
+  rectMode(CENTER);
+  square (width/2,height/2,a);
+    if(a>500){
+      a=0;  
+  }
+        a=a+1;
+}
+  if (sesgado){
+    background(255, 255, 255);
+  
+    ladoX4 *= sesgoX4;
+    ladoY4 *= sesgoY4;
+    
+    // Dibuja el cuadrado sesgado
+    rectMode(CENTER);
+    rect(width/2,height/2,ladoX4, ladoY4);
+    }
+   
+}
+void keyPressed() {
+  if (key == '1') {
+    rotar = true;
+  } else if (key == '2') {
+    rotar = false;
+    traslacion= true;
+    escalado=false;
+    sesgado=false;
+  } else if (key == '3') {
+    rotar = false;
+    traslacion= false;
+    escalado=true;
+    sesgado=false;
+  } else if (key == '4') {
+    rotar = false;
+    traslacion= false;
+    escalado=false;
+    sesgado=true;
+  }
 }
